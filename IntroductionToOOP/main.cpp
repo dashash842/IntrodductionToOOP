@@ -49,4 +49,5 @@ void main()
 	A.set_x(2);
 	A.set_y(3);
 	cout << A.get_y() << "\t" << A.get_y() << endl;
+
 }
