@@ -58,6 +58,15 @@ public:
 		cout << "Destructor:\t\t" << this << endl;
 	}
 
+	//operators
+	Point operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyAssigment:\t\t" << this << endl;
+		return *this;
+	}
+
 	//        Methods:
 	double distance(Point& other)const
 	{
@@ -88,7 +97,7 @@ public:
 
 
 //#define STRUCT_POINT
-#define DINSTANCE_CHEK
+//#define DINSTANCE_CHEK
 //#define CONSTRUCTORS_CHECK
 
 
@@ -158,6 +167,21 @@ void main()
 
 	Point D = C;      //copy constructor
 	D.print();
+
+	Point E;      //Defoult constructor
+	E = D;        //Assigment operators
+	E.print();
+
+
 #endif // CONSTRUCTORS_CHECK
 
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << "\t" << b << "\t" << c << endl;
+
+	Point A, B, C;
+	A = B = C = Point(2, 3);
+	A.print();
+	B.print();
+	C.print();
 }
