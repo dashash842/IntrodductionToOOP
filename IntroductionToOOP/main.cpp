@@ -59,7 +59,7 @@ public:
 	}
 
 	//operators
-	Point operator=(const Point& other)
+	Point& operator=(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
@@ -178,9 +178,11 @@ void main()
 	int a, b, c;
 	a = b = c = 0;
 	cout << a << "\t" << b << "\t" << c << endl;
-
 	Point A, B, C;
+	cout << delimiter << endl;
 	A = B = C = Point(2, 3);
+	//Point(2,3) - здесь мы явно вызываем конструкторб и создаем временный безымянный объект
+	cout << delimiter << endl;
 	A.print();
 	B.print();
 	C.print();
