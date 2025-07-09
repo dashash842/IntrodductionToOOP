@@ -269,11 +269,25 @@ bool operator<=(const Fraction& left, const Fraction& right)
 	//return left < right || left == right;
 }
 
+std::ostream& operator<<(std::ostream& os, const Fraction& obj)
+{
+	if (obj.get_integer())os << obj.get_integer();
+	if (obj.get_numerator())
+	{
+		if (obj.get_integer())os << "(";
+		os << obj.get_numerator() << "/" << obj.get_denominator();
+		if (obj.get_integer())os << ")";
+	}
+	else if (obj.get_integer() == 0)os << 0;
+	return os;
+}
+
 //#define CONSTRUCTORS_CHECK
 //#define ARIFMETICAL_OPERATORS_CHECK
 //#define INCREMENTO_DECREMENTO_CHEK
 //#define HOMEWORK
-#define COMPARISON_OPERATORS
+//#define COMPARISON_OPERATORS
+//#define STREAMS_CHECK
 
 
 void main()
@@ -369,6 +383,12 @@ void main()
 
 #endif // COMPARISON_OPERATORS
 
+#ifdef STREAMS_CHECK
+	Fraction A(2, 3, 4);
+	cout << "Введите простую дробьЖ ";
+	cin >> A;
+	cout << A << endl;
+#endif // STREAMS_CHECK
 
 
 
