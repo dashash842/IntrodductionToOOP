@@ -4,6 +4,8 @@ using namespace std;
 class Fraction;      // объявление класса
 Fraction operator*(Fraction left, Fraction right);  //объявление оператора
 Fraction operator/(const Fraction& left, const Fraction& right);
+Fraction operator+(Fraction left, Fraction right);
+Fraction operator-(const Fraction left, const Fraction right);
 
 class Fraction       //описание класса
 {
@@ -96,6 +98,14 @@ public:
 	{
 		return *this = *this / other;
 	}
+	Fraction& operator +=(const Fraction& other)
+	{
+		return *this = *this + other;
+	}
+	Fraction& operator -=(const Fraction& other)
+	{
+		return *this = *this - other;
+	}
 
 	//       Incremento/Decremento
 	Fraction& operator++()
@@ -109,6 +119,17 @@ public:
 		integer++;
 		return old;
 	}
+	Fraction& operator--()
+	{
+		integer--;
+		return *this;
+	}
+	Fraction& operator--(int)
+	{
+		integer--;
+		return *this;
+	}
+	
 
 
 	//          Methods:
@@ -173,6 +194,16 @@ Fraction operator+(Fraction left, Fraction right)
 		left.get_denominator() * right.get_denominator()
 	).to_proper();
 }
+Fraction operator-( Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return Fraction
+	(
+		left.get_numerator() * right.get_denominator() - right.get_numerator() * left.get_denominator(),
+		left.get_denominator() * right.get_denominator()
+	).to_proper();
+}
 Fraction operator*(Fraction left, Fraction right)
 {
 	left.to_improper();
@@ -199,9 +230,13 @@ Fraction operator/(const Fraction& left, const Fraction& right)
 	return left * right.inverted();
 }
 
+
 //#define CONSTRUCTORS_CHECK
-#define ARIFMETICAL_OPERATORS_CHECK
+//#define ARIFMETICAL_OPERATORS_CHECK
 //#define INCREMENTO_DECREMENTO_CHEK
+#define HOMEWORK
+//#define COMPARISON_OPERATORS
+
 
 void main()
 {
@@ -235,15 +270,18 @@ void main()
 
 	C = A / B;
 	C.print();
-
+	
 	A *= B;
 	A.print();
 
 	A /= B;
 	A.print();
-
+	
 	C = A + B;
 	C.print();
+	
+
+	
 
 #endif // ARIFMETICAL_OPERATORS_CHECK
 
@@ -257,10 +295,54 @@ void main()
 
 	Fraction A(2, 3, 4);
 	Fraction B;
-	B = ++A++;
+
+	//B = ++A++;
+	//A.print();
+	//B.print();
+
+	B = --A--;
 	A.print();
 	B.print();
 
 #endif // INCREMENTO_DECREMENTO_CHEK
+
+#ifdef HOMEWORK
+	Fraction A(2, 3, 4);
+	A.print();
+	Fraction B(3, 4, 5);
+	B.print();
+
+	Fraction C = A - B;
+	C.print();
+	cout << "оператор '-'" << endl;
+	
+	A += B;
+	A.print();
+	cout << "оператор '+='" << endl;
+
+	A -= B;
+	A.print();                          //не правильно считает
+	cout << "оператор -=" << endl;
+
+#endif // HOMEWORK
+
+#ifdef COMPARISON_OPERATORS
+	Fraction A(2,3,4);
+	A.print();
+	Fraction B(3,4,5);
+	B.print();
+
+	if (A > B)
+	{
+		cout << "Выражение верно!" << endl;
+	}
+	else
+	{
+		cout << "Выражение не верно!" << endl;
+	}
+	
+
+#endif // COMPARISON_OPERATORS
+
 
 }
