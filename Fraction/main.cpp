@@ -229,13 +229,51 @@ Fraction operator/(const Fraction& left, const Fraction& right)
 {
 	return left * right.inverted();
 }
-
+//                   Comparison operators
+bool operator==(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return
+		left.get_numerator() * right.get_denominator() ==
+		right.get_numerator() * left.get_denominator();
+}
+bool operator!=(const Fraction& left, const Fraction& right)
+{
+	return !(left == right);
+}
+bool operator>(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return
+		left.get_numerator() * right.get_denominator() >
+		right.get_numerator() * left.get_denominator();
+}
+bool operator<(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return
+		left.get_numerator() * right.get_denominator() <
+		right.get_numerator() * left.get_denominator();
+}
+bool operator>=(const Fraction& left, const Fraction& right)
+{
+	return !(left < right);
+	//return left > right || left == right;
+}
+bool operator<=(const Fraction& left, const Fraction& right)
+{
+	return !(left > right);
+	//return left < right || left == right;
+}
 
 //#define CONSTRUCTORS_CHECK
 //#define ARIFMETICAL_OPERATORS_CHECK
 //#define INCREMENTO_DECREMENTO_CHEK
-#define HOMEWORK
-//#define COMPARISON_OPERATORS
+//#define HOMEWORK
+#define COMPARISON_OPERATORS
 
 
 void main()
@@ -255,8 +293,6 @@ void main()
 	Fraction D(2, 3, 4);
 	D.print();
 #endif // CONSTRUCTORS_CHECK
-
-
 
 #ifdef ARIFMETICAL_OPERATORS_CHECK
 	Fraction A(2, 3, 4);
@@ -327,22 +363,13 @@ void main()
 #endif // HOMEWORK
 
 #ifdef COMPARISON_OPERATORS
-	Fraction A(2,3,4);
-	A.print();
-	Fraction B(3,4,5);
-	B.print();
 
-	if (A > B)
-	{
-		cout << "Выражение верно!" << endl;
-	}
-	else
-	{
-		cout << "Выражение не верно!" << endl;
-	}
-	
+	cout << (2 == 3) << endl;
+	cout << (Fraction(1, 3) <= Fraction(5, 11)) << endl;
 
 #endif // COMPARISON_OPERATORS
+
+
 
 
 }
