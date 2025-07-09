@@ -1,17 +1,17 @@
-#include<iostream>
+п»ї#include<iostream>
 using namespace std;
 
-class Fraction;      // объявление класса
-Fraction operator*(Fraction left, Fraction right);  //объявление оператора
+class Fraction;      // РѕР±СЉСЏРІР»РµРЅРёРµ РєР»Р°СЃСЃР°
+Fraction operator*(Fraction left, Fraction right);  //РѕР±СЉСЏРІР»РµРЅРёРµ РѕРїРµСЂР°С‚РѕСЂР°
 Fraction operator/(const Fraction& left, const Fraction& right);
 Fraction operator+(Fraction left, Fraction right);
 Fraction operator-(const Fraction left, const Fraction right);
 
-class Fraction       //описание класса
+class Fraction       //РѕРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР°
 {
-	int integer;       //целая часть
-	int numerator;     //числитель
-	int denominator;   //знаменатель
+	int integer;       //С†РµР»Р°СЏ С‡Р°СЃС‚СЊ
+	int numerator;     //С‡РёСЃР»РёС‚РµР»СЊ
+	int denominator;   //Р·РЅР°РјРµРЅР°С‚РµР»СЊ
 public:
 	int get_integer()const
 	{
@@ -135,14 +135,14 @@ public:
 	//          Methods:
 	Fraction& to_improper()
 	{
-		//Перевод в неправильную дробь:
+		//РџРµСЂРµРІРѕРґ РІ РЅРµРїСЂР°РІРёР»СЊРЅСѓСЋ РґСЂРѕР±СЊ:
 		numerator += integer * denominator;
 		integer = 0;
 		return *this;
 	}
 	Fraction& to_proper()
 	{
-		//перевод в правильную дробь:
+		//РїРµСЂРµРІРѕРґ РІ РїСЂР°РІРёР»СЊРЅСѓСЋ РґСЂРѕР±СЊ:
 		integer += numerator / denominator;
 		numerator %= denominator;
 		return *this;
@@ -151,7 +151,7 @@ public:
 	{
 		Fraction inverted = *this;
 		inverted.to_improper();
-		swap(inverted.numerator, inverted.denominator);  //меняем местами 2 переменные
+		swap(inverted.numerator, inverted.denominator);  //РјРµРЅСЏРµРј РјРµСЃС‚Р°РјРё 2 РїРµСЂРµРјРµРЅРЅС‹Рµ
 		return inverted;
 	}
 	Fraction& reduce()
@@ -165,7 +165,7 @@ public:
 			more = less;
 			less = rest;
 		} while (rest);
-		int GCD = more; //GCD - Greatest Common Divisor(наибольший общий делитель)
+		int GCD = more; //GCD - Greatest Common Divisor(РЅР°РёР±РѕР»СЊС€РёР№ РѕР±С‰РёР№ РґРµР»РёС‚РµР»СЊ)
 		numerator /= GCD;
 		denominator /= GCD;
 		return *this;
@@ -314,15 +314,15 @@ void main()
 
 	Fraction C = A - B;
 	C.print();
-	cout << "оператор '-'" << endl;
+	cout << "РѕРїРµСЂР°С‚РѕСЂ '-'" << endl;
 	
 	A += B;
 	A.print();
-	cout << "оператор '+='" << endl;
+	cout << "РѕРїРµСЂР°С‚РѕСЂ '+='" << endl;
 
 	A -= B;
-	A.print();                          //не правильно считает
-	cout << "оператор -=" << endl;
+	A.print();                          //РЅРµ РїСЂР°РІРёР»СЊРЅРѕ СЃС‡РёС‚Р°РµС‚
+	cout << "РѕРїРµСЂР°С‚РѕСЂ -=" << endl;
 
 #endif // HOMEWORK
 
@@ -334,11 +334,11 @@ void main()
 
 	if (A > B)
 	{
-		cout << "Выражение верно!" << endl;
+		cout << "Р’С‹СЂР°Р¶РµРЅРёРµ РІРµСЂРЅРѕ!" << endl;
 	}
 	else
 	{
-		cout << "Выражение не верно!" << endl;
+		cout << "Р’С‹СЂР°Р¶РµРЅРёРµ РЅРµ РІРµСЂРЅРѕ!" << endl;
 	}
 	
 
