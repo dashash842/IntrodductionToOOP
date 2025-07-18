@@ -47,12 +47,23 @@ public:
 		this->denominator = 1;
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
 		this->denominator = 1;
 		cout << "SingleArgumentConstructor:" << this << endl;
+	}
+	Fraction(double decimal)
+	{
+		//decimal - десятичная дробь.
+		decimal += 1e-10;
+		integer = decimal;   //1) получаем целую часть дроби
+		decimal -= integer;  //2) убираем целую часть из десятичной дроби;
+		denominator = 1e+9;  //3) получаем максимально возможный знаменатель 1000000000;
+		numerator = decimal * denominator; //4) вытаскиваем дробну часть в числитель
+		reduce();
+		cout << "SinglArgumentConstructor:" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
 	{
@@ -129,7 +140,12 @@ public:
 		integer--;
 		return *this;
 	}
-	
+	//           Type-cast operators
+	explicit operator int()const
+	{
+	//	to_impropper();
+		return integer + numerator / denominator;
+	}
 
 
 	//          Methods:
@@ -288,6 +304,10 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 //#define HOMEWORK
 //#define COMPARISON_OPERATORS
 //#define STREAMS_CHECK
+//#define TYPE_CONVERSION_BASICS
+//#define CONVERSINS_FROM_OTHER_TO_CLASS
+//#define CONVERSIONS_FROM_CLASS_TO_OTHER
+#define HAVE_A_NICE_DAY
 
 
 void main()
@@ -390,6 +410,41 @@ void main()
 	cout << A << endl;
 #endif // STREAMS_CHECK
 
+#ifdef TYPE_CONVERSION_BASICS
+	int a = 2;       //No conversion
+	double b = 3;    //conversion from less to more
+	int c = b;       //conversion from more to less without data loss
+	int d = 5.5;     //conversion from more to less with data loss  
+#endif // TYPE_CONVERSION_BASICS
+
+#ifdef CONVERSINS_FROM_OTHER_TO_CLASS
+
+	Fraction A = 5;          //Singl-Argument constructor
+
+	cout << A << endl;
+
+	Fraction B;
+	//B = 8;           //1ArgConstructor-> CopyAssignment (from less to
+	//Single-Argument Constructor создает из 'B' временный безымянный объект,
+	//а оператор присваивания просто записывает его существующий объект 'B'  
+#endif // CONVERSINS_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSIONS_FROM_CLASS_TO_OTHER
+
+	Fraction A(2, 3, 4);
+	A.to_improper().print();
+	int a = (int)A;
+	cout << a << endl;
+
+	double b = A;
+	cout << b << endl;
+
+#endif // CONVERSIONS_FROM_CLASS_TO_OTHER
+
+#ifdef HAVE_A_NICE_DAY
+	Fraction A = 3.333;     //Conversoin from 'double' to 'Fraction'
+	cout << A << endl;
+#endif // HAVE_A_NICE_DAY
 
 
-}
+} 
