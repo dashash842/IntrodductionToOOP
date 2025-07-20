@@ -290,6 +290,7 @@ bool operator<=(const Fraction& left, const Fraction& right)
 
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
+	//stream extraction operator
 	if (obj.get_integer())os << obj.get_integer();
 	if (obj.get_numerator())
 	{
@@ -300,16 +301,41 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0)os << 0;
 	return os;
 }
+std::istream& operator>>(std::istream& is, Fraction& obj)
+{
+	const int SIZE =256;    //размер буфера ввода
+	char buffer[SIZE] = {}; //буфер ввода
+	//is >> buffer;
+	is.getline(buffer, SIZE);
+	const char delimeters[] = "(/, )";
+	int n = 0;           //количество введенных чисел
+	int numbers[3] = {};//числа введеные с клавиатуры
+	for (
+		char* pch = strtok(buffer, delimeters); 
+		pch && n<3;
+		pch = strtok(NULL, delimeters)
+		)
+		numbers[n++] = atoi(pch);  //atoi() - ASCII-string to Integer
+	//for (int i = 0; i < n; i++)cout << numbers[i] << "\t";cout << endl;
+	switch (n)
+	{
+	case 0: obj = Fraction(); break;
+	case 1: obj = Fraction(numbers[0]); break;
+	case 2: obj = Fraction(numbers[0], numbers[1]); break;
+	case 3: obj = Fraction(numbers[0], numbers[1], numbers[2]); break;
+	}
+	return is;
+}
 
 //#define CONSTRUCTORS_CHECK
 //#define ARIFMETICAL_OPERATORS_CHECK
 //#define INCREMENTO_DECREMENTO_CHEK
 //#define HOMEWORK
 //#define COMPARISON_OPERATORS
-//#define STREAMS_CHECK
+#define STREAMS_CHECK
 //#define TYPE_CONVERSION_BASICS
 //#define CONVERSINS_FROM_OTHER_TO_CLASS
-#define CONVERSIONS_FROM_CLASS_TO_OTHER
+//#define CONVERSIONS_FROM_CLASS_TO_OTHER
 //#define HAVE_A_NICE_DAY
 
 
@@ -408,7 +434,7 @@ void main()
 
 #ifdef STREAMS_CHECK
 	Fraction A(2, 3, 4);
-	cout << "Введите простую дробьЖ ";
+	cout << "Введите простую дробь: ";
 	cin >> A;
 	cout << A << endl;
 #endif // STREAMS_CHECK
