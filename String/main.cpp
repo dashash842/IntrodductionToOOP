@@ -48,26 +48,39 @@ public:
 
 		cout << "CopyConstructor:\t" << this << endl;
 	}
-	String& operator=(const String& other)
-	{
-		delete[] this->str;
-		this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-			this->str[i] = other.str[i];
-		cout << "CopyAssignment:\t" << this << endl;
-		return *this;
-	}
-
 	~String()
 	{
 	delete[] str;
 	str = nullptr;
 	size = 0;
 	cout << "Destructor:\t\t" << this << endl;
-
 	}
 
+	//      operators
+	String& operator=(const String& other)
+	{
+		//this->str = other.str;   //shallow copy - поверхностное копирование
+		//0) Проверяется не является ли тот объект этим объектов
+		if (this == &other)return *this;
+		//1) Удаляем старую динамическую память
+		delete[] this->str;
+		//Deep copy - побитовое копирование
+		this->size = other.size;
+		//2) Выделяем новую динамическую память:
+		this->str = new char[size] {};
+		for (int i = 0; i < size; i++)
+			this->str[i] = other.str[i];
+		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
+	}
+	char operator[](int i)const 
+	{
+		return str[i];
+	}
+	char& operator[](int i)
+	{
+		return str[i];
+	}
 
 	//    metods:
 	void print()const
@@ -80,9 +93,10 @@ String operator+(const String& left, const String& right)
 {
 	String result(left.get_size() + right.get_size() - 1);
 	for (int i = 0; i < left.get_size(); i++)
-		result.get_str()[i] = left.get_str()[i];
+		result[i] = left[i];
+		//result.get_str()[i] = left.get_str()[i];
 	for (int i = 0; i < right.get_size(); i++)
-		result.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+		result[i + left.get_size() - 1] = right[i];
 	return result;
 }
 
@@ -91,8 +105,8 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 	return os << obj.get_str();
 }
 
-//#define CONSTRUCTORS_CHECK
-
+#define CONSTRUCTORS_CHECK
+//#define COPY_SEMANTIC_CHECK
 
 void main()
 {
@@ -119,10 +133,17 @@ void main()
 
 #endif // CONSTRUCTORS_CHECK
 
+#ifdef COPY_SEMANTIC_CHECK
 	String str1 = "Hello";
+	str1 = str1;
 	cout << str1 << endl;
 
-	String str2 = str1;
+	String str2;
+	str2 = str1;
 	cout << str2 << endl;
+
+#endif // COPY_SEMANTIC_CHECK
+
+
 
 }
