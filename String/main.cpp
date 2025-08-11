@@ -48,6 +48,16 @@ public:
 
 		cout << "CopyConstructor:\t" << this << endl;
 	}
+	String& operator=(const String& other)
+	{
+		delete[] this->str;
+		this->size = other.size;
+		this->str = new char[size] {};
+		for (int i = 0; i < size; i++)
+			this->str[i] = other.str[i];
+		cout << "CopyAssignment:\t" << this << endl;
+		return *this;
+	}
 
 	~String()
 	{
@@ -57,6 +67,7 @@ public:
 	cout << "Destructor:\t\t" << this << endl;
 
 	}
+
 
 	//    metods:
 	void print()const
