@@ -48,6 +48,16 @@ public:
 
 		cout << "CopyConstructor:\t" << this << endl;
 	}
+	String(String&& other)
+	{
+		//MoveConstructor - ShallowCopy
+		this->size = other.size;
+		this->str = other.str;
+		//Обнуляем принимаемый объект для того чтобы предотвратить удаление его ресурсов деструктором.
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveConstructor:\t" << this << endl;
+	}
 	~String()
 	{
 	delete[] str;
@@ -71,6 +81,21 @@ public:
 		for (int i = 0; i < size; i++)
 			this->str[i] = other.str[i];
 		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
+	}
+	String& operator=(String&& other)
+	{
+		//0) проверка не является ли 'this' и 'other' одним и тем же объектом
+		if (this == &other)return *this;
+		//1) удаление старой памяти
+		delete[] str;
+		//2)ShallowCopy
+		this->size = other.size;
+		this->str = other.str;
+		//3)Обнуляем принимаемый объект:
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t\t" << this << endl;
 		return *this;
 	}
 	char operator[](int i)const 
@@ -126,7 +151,8 @@ void main()
 	cout << str4 << endl;
 
 	cout << delimeter << endl;
-	String str5 = str3 + str4;
+	String str5;
+	str5 = str3 + str4;
 	cout << delimeter << endl;
 
 	cout << str5 << endl;
