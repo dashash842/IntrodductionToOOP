@@ -29,22 +29,20 @@ public:
 		//this->str = new char[size] {};
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	String(const char* str):size(strlen(str)+1), str(new char[size]{})
-	{
-		//this->size = strlen(str) + 1;   //strlen() возвращает размер строки в символах, +1 нужен чтобы выделилась память под NULL-terminators
+	String(const char* str) :String(strlen(str)+1)
+	{	//this->size = strlen(str) + 1;   //strlen() возвращает размер строки в символах, +1 нужен чтобы выделилась память под NULL-terminators
 		//this->str = new char[size] {}; 
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t\t" << this << endl;
 	}
-	String(const String& other):size(other.size), str(new char[size]{})
+	String(const String& other):String(other.str)
 	{
 		//this->str = other.str;     //Shallow Copy
 		/// ------------------------------- ///
 		//Deep Copy:
 		//this->size = other.size;
 		//this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-			this->str[i] = other.str[i];
+		//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 
 		cout << "CopyConstructor:\t" << this << endl;
 	}
@@ -197,7 +195,7 @@ void main()
 	String str7{ "World" };
 	str7.print();
 
-	String str8 = str7;
+	String str8 = str7;        //CopyConstructor
 	str8.print();
 
 	String str9(str8);
