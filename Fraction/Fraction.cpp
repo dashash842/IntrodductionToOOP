@@ -1,10 +1,10 @@
-#include"Fraction.h"
+п»ї#include"Fraction.h"
 
 using std::sin;
 using std::cout;
 
 //////////////////////////////////////////////////////////////////////
-/////////            Определение класса (Class definition)   /////////
+/////////            РћРїСЂРµРґРµР»РµРЅРёРµ РєР»Р°СЃСЃР° (Class definition)   /////////
 
 	int Fraction::get_integer()const
 	{
@@ -49,12 +49,12 @@ using std::cout;
 	}
 	Fraction::Fraction(double decimal)
 	{
-		//decimal - десятичная дробь.
+		//decimal - РґРµСЃСЏС‚РёС‡РЅР°СЏ РґСЂРѕР±СЊ.
 		decimal += 1e-10;
-		integer = decimal;   //1) получаем целую часть дроби
-		decimal -= integer;  //2) убираем целую часть из десятичной дроби;
-		denominator = 1e+9;  //3) получаем максимально возможный знаменатель 1000000000;
-		numerator = decimal * denominator; //4) вытаскиваем дробну часть в числитель
+		integer = decimal;   //1) РїРѕР»СѓС‡Р°РµРј С†РµР»СѓСЋ С‡Р°СЃС‚СЊ РґСЂРѕР±Рё
+		decimal -= integer;  //2) СѓР±РёСЂР°РµРј С†РµР»СѓСЋ С‡Р°СЃС‚СЊ РёР· РґРµСЃСЏС‚РёС‡РЅРѕР№ РґСЂРѕР±Рё;
+		denominator = 1e+9;  //3) РїРѕР»СѓС‡Р°РµРј РјР°РєСЃРёРјР°Р»СЊРЅРѕ РІРѕР·РјРѕР¶РЅС‹Р№ Р·РЅР°РјРµРЅР°С‚РµР»СЊ 1000000000;
+		numerator = decimal * denominator; //4) РІС‹С‚Р°СЃРєРёРІР°РµРј РґСЂРѕР±РЅСѓ С‡Р°СЃС‚СЊ РІ С‡РёСЃР»РёС‚РµР»СЊ
 		reduce();
 		cout << "SinglArgumentConstructor:" << this << endl;
 	}
@@ -147,14 +147,14 @@ using std::cout;
 	//          Methods:
 	Fraction& Fraction::to_improper()
 	{
-		//Перевод в неправильную дробь:
+		//РџРµСЂРµРІРѕРґ РІ РЅРµРїСЂР°РІРёР»СЊРЅСѓСЋ РґСЂРѕР±СЊ:
 		numerator += integer * denominator;
 		integer = 0;
 		return *this;
 	}
 	Fraction& Fraction::to_proper()
 	{
-		//перевод в правильную дробь:
+		//РїРµСЂРµРІРѕРґ РІ РїСЂР°РІРёР»СЊРЅСѓСЋ РґСЂРѕР±СЊ:
 		integer += numerator / denominator;
 		numerator %= denominator;
 		return *this;
@@ -163,7 +163,7 @@ using std::cout;
 	{
 		Fraction inverted = *this;
 		inverted.to_improper();
-		swap(inverted.numerator, inverted.denominator);  //меняем местами 2 переменные
+		swap(inverted.numerator, inverted.denominator);  //РјРµРЅСЏРµРј РјРµСЃС‚Р°РјРё 2 РїРµСЂРµРјРµРЅРЅС‹Рµ
 		return inverted;
 	}
 	Fraction& Fraction::reduce()
@@ -177,7 +177,7 @@ using std::cout;
 			more = less;
 			less = rest;
 		} while (rest);
-		int GCD = more; //GCD - Greatest Common Divisor(наибольший общий делитель)
+		int GCD = more; //GCD - Greatest Common Divisor(РЅР°РёР±РѕР»СЊС€РёР№ РѕР±С‰РёР№ РґРµР»РёС‚РµР»СЊ)
 		numerator /= GCD;
 		denominator /= GCD;
 		return *this;
@@ -296,13 +296,13 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 }
 std::istream& operator>>(std::istream& is, Fraction& obj)
 {
-	const int SIZE = 256;    //размер буфера ввода
-	char buffer[SIZE] = {}; //буфер ввода
+	const int SIZE = 256;    //СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР° РІРІРѕРґР°
+	char buffer[SIZE] = {}; //Р±СѓС„РµСЂ РІРІРѕРґР°
 	//is >> buffer;
 	is.getline(buffer, SIZE);
 	const char delimeters[] = "(/, )";
-	int n = 0;           //количество введенных чисел
-	int numbers[3] = {};//числа введеные с клавиатуры
+	int n = 0;           //РєРѕР»РёС‡РµСЃС‚РІРѕ РІРІРµРґРµРЅРЅС‹С… С‡РёСЃРµР»
+	int numbers[3] = {};//С‡РёСЃР»Р° РІРІРµРґРµРЅС‹Рµ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
 	for (
 		char* pch = strtok(buffer, delimeters);
 		pch && n < 3;
@@ -320,5 +320,5 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	return is;
 }
 
-/////////      Конец определения класса (Class definition end)        /////////
+/////////      РљРѕРЅРµС† РѕРїСЂРµРґРµР»РµРЅРёСЏ РєР»Р°СЃСЃР° (Class definition end)        /////////
 ///////////////////////////////////////////////////////////////////////////////
