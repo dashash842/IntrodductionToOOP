@@ -1,10 +1,5 @@
 ﻿#include"String.h"
-void Clear(char* str)
-{
-	delete[] str;
-}
-//#define CONSTRUCTORS_CHECK
-//#define COPY_SEMANTIC_CHECK
+
 
 void main()
 {

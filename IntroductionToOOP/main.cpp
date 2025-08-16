@@ -1,32 +1,22 @@
-#include<iostream>
+п»ї#include<iostream>
 using namespace std;
 
 #define delimiter "\n--------------------------------------\n"
 //using std::cin
 //std::cout
 //std::endl
-
+// 
+//////////////////////////////////////////////////////////////////////
+/////////            РћР±СЉСЏРІР»РµРЅРёРµ РєР»Р°СЃСЃР° (Class declaration)   /////////
 class Point
 {
 	double x;
 	double y;
 public:
-	double get_x()const
-	{
-		return x;
-	}
-	double get_y()const
-	{
-		return y;
-	}
-	void set_x(double x)
-	{
-		this->x = x;
-	}
-	void set_y(double y)
-	{
-		this->y = y;
-	}
+	double get_x()const;
+	double get_y()const;
+	void set_x(double x);
+	void set_y(double y);
 	//        Constructors
 	/*Point()
 	{
@@ -38,22 +28,83 @@ public:
 		this->x = x;
 		this->y = 0;
 		cout << "SinglArgumentConstructor: " << this << endl;
-		//конструктор с одним парамтером
+		//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РѕРґРЅРёРј РїР°СЂР°РјС‚РµСЂРѕРј
 		print();
 	}*/
-	Point(double x=0, double y=0)
+	Point(double x = 0, double y = 0);
+	Point(const Point& other);
+	~Point();
+
+	//operators
+	Point& operator=(const Point& other);
+
+	Point& operator++();    
+	Point operator++(int); 
+		
+
+	//        Methods:
+	double distance(Point& other)const;
+	void print()const;
+};
+
+	double distance(const Point& A, const Point& B);
+
+	Point operator+(const Point& left, const Point& right);
+
+	bool operator== (const Point& left, const Point& right);
+	bool operator!=(const Point& left, const Point& right);
+	/////////      РљРѕРЅРµС† РѕР±СЉСЏРІР»РµРЅРёСЏ РєР»Р°СЃСЃР° (Class declaration end)        /////////
+    ///////////////////////////////////////////////////////////////////////////////
+
+	/// ----------------------------------------------------------------------///
+
+    //////////////////////////////////////////////////////////////////////
+    /////////            РћРїСЂРµРґРµР»РµРЅРёРµ РєР»Р°СЃСЃР° (Class definition)   /////////
+
+	double Point::get_x()const
+	{
+		return x;
+	}
+	double Point::get_y()const
+	{
+		return y;
+	}
+	void Point::set_x(double x)
+	{
+		this->x = x;
+	}
+	void Point::set_y(double y)
+	{
+		this->y = y;
+	}
+	//        Constructors
+
+	/*Point()
+	{
+		x = y = 0;
+		cout << "DefoultConstructor:\t" << this << endl;
+	}*/
+	/*Point(double x)
+	 {
+		this->x = x;
+		this->y = 0;
+		cout << "SinglArgumentConstructor: " << this << endl;
+		//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РѕРґРЅРёРј РїР°СЂР°РјС‚РµСЂРѕРј
+		print();
+	}*/
+	Point::Point(double x = 0, double y = 0)
 	{
 		this->x = x;
 		this->y = y;
 		cout << "Constructor:\t\t" << this << endl;
 	}
-	Point(const Point& other)
+	Point::Point(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
 		cout << "CopyConstructor:\t" << this << endl;
 	}
-	~Point()
+	Point::~Point()
 	{
 		cout << "Destructor:\t\t" << this << endl;
 	}
@@ -75,7 +126,7 @@ public:
 	}
 	Point operator++(int)  //Postfix (Suffix) increment
 	{
-		Point old = *this; // сохраняем старое значение объекта
+		Point old = *this; // СЃРѕС…СЂР°РЅСЏРµРј СЃС‚Р°СЂРѕРµ Р·РЅР°С‡РµРЅРёРµ РѕР±СЉРµРєС‚Р°
 		x++;
 		y++;
 		return old;
@@ -84,8 +135,8 @@ public:
 	//        Methods:
 	double distance(Point& other)const
 	{
-		//this - эта точка (находим расстояние от этой точки)
-		//other - та точка (до указанной точки)	
+		//this - СЌС‚Р° С‚РѕС‡РєР° (РЅР°С…РѕРґРёРј СЂР°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ СЌС‚РѕР№ С‚РѕС‡РєРё)
+		//other - С‚Р° С‚РѕС‡РєР° (РґРѕ СѓРєР°Р·Р°РЅРЅРѕР№ С‚РѕС‡РєРё)	
 		//this->x *= 100;
 		//other.x *= 100;    //e0137
 		double x_distance = this->x - other.x;
@@ -100,37 +151,40 @@ public:
 	}
 };
 
-	double distance(const Point& A, const Point& B)
-	{
-		//A.set_x(A.get_x() * 100);
-		double x_distance = A.get_x() - B.get_x();
-		double y_distance = A.get_y() - B.get_y();
-		double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
-		return distance;
-	}
+double distance(const Point& A, const Point& B)
+{
+	//A.set_x(A.get_x() * 100);
+	double x_distance = A.get_x() - B.get_x();
+	double y_distance = A.get_y() - B.get_y();
+	double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
+	return distance;
+}
 
-	Point operator+(const Point& left, const Point& right)
-	{
-		Point result;
-		result.set_x(left.get_x() + right.get_x());
-		result.set_y(left.get_y() + right.get_y());
-		return result;
-	}
+Point operator+(const Point& left, const Point& right)
+{
+	Point result;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());
+	return result;
+}
 
-	bool operator== (const Point& left, const Point& right)
-	{
-		/* 
-		if (left.get_x() == right.get_x() && left.get_y() == right.get_y())
-			return true;
-		else
-			return false;
-		*/
-		return left.get_x() == right.get_x() && left.get_y() == right.get_y();
-	}
-	bool operator!=(const Point& left, const Point& right)
-	{
-		return !(left == right);
-	}
+bool operator== (const Point& left, const Point& right)
+{
+	/*
+	if (left.get_x() == right.get_x() && left.get_y() == right.get_y())
+		return true;
+	else
+		return false;
+	*/
+	return left.get_x() == right.get_x() && left.get_y() == right.get_y();
+}
+bool operator!=(const Point& left, const Point& right)
+{
+	return !(left == right);
+}
+/////////      РљРѕРЅРµС† РѕРїСЂРµРґРµР»РµРЅРёСЏ РєР»Р°СЃСЃР° (Class definition end)        /////////
+///////////////////////////////////////////////////////////////////////////////
+
 //#define STRUCT_POINT
 //#define DINSTANCE_CHEK
 //#define CONSTRUCTORS_CHECK
@@ -141,12 +195,12 @@ void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef STRUCT_POINT
-	int a;     //Объявление переменной 'а' типа 'int'
-	Point A;   //Объявление переменной 'A' типа 'Point'
-	//создание объекта 'А'  структуры 'Point'
-	//создание экземпляра 'А'  структуры 'Point'
+	int a;     //РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ 'Р°' С‚РёРїР° 'int'
+	Point A;   //РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ 'A' С‚РёРїР° 'Point'
+	//СЃРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р° 'Рђ'  СЃС‚СЂСѓРєС‚СѓСЂС‹ 'Point'
+	//СЃРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° 'Рђ'  СЃС‚СЂСѓРєС‚СѓСЂС‹ 'Point'
    //'A' is instance of struct 'point'
-	//instantient - создать объект
+	//instantient - СЃРѕР·РґР°С‚СЊ РѕР±СЉРµРєС‚
 	A.x = 2;
 	A.y = 3;
 	cout << A.x << "\t" << A.y << endl;
@@ -166,13 +220,13 @@ void main()
 	B.set_y(8);
 	cout << B.get_x() << "\t" << B.get_y() << endl;
 	cout << delimiter << endl;
-	cout << "Расстояние от точки 'A' до точки 'B': " << A.distance(B) << endl;
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ С‚РѕС‡РєРё 'A' РґРѕ С‚РѕС‡РєРё 'B': " << A.distance(B) << endl;
 	cout << delimiter << endl;
-	cout << "Расстояние от точки 'B' до точки 'A': " << B.distance(A) << endl;
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ С‚РѕС‡РєРё 'B' РґРѕ С‚РѕС‡РєРё 'A': " << B.distance(A) << endl;
 	cout << delimiter << endl;
-	cout << "Расстояние между точкуами 'A' и 'B': " << distance(A, B) << endl;
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ С‚РѕС‡РєСѓР°РјРё 'A' Рё 'B': " << distance(A, B) << endl;
 	cout << delimiter << endl;
-	cout << "Расстояние между точкуами 'B' и 'A': " << distance(B, A) << endl;
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ С‚РѕС‡РєСѓР°РјРё 'B' Рё 'A': " << distance(B, A) << endl;
 	cout << delimiter << endl;
 
 
@@ -186,17 +240,17 @@ void main()
 	}
 	cout << endl;*/
 
-	Point A;         //просто создаем объект, и для этого неявно вызывается конструктор по умолчанию
+	Point A;         //РїСЂРѕСЃС‚Рѕ СЃРѕР·РґР°РµРј РѕР±СЉРµРєС‚, Рё РґР»СЏ СЌС‚РѕРіРѕ РЅРµСЏРІРЅРѕ РІС‹Р·С‹РІР°РµС‚СЃСЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 	A.print();
 	//{
 	//	Point B;
-	//	cout << "Point B существует" << endl;
+	//	cout << "Point B СЃСѓС‰РµСЃС‚РІСѓРµС‚" << endl;
 	//	B.distance(A);
 	//}
-	//cout << "Здесь Point B уже НЕ существует" << endl;
+	//cout << "Р—РґРµСЃСЊ Point B СѓР¶Рµ РќР• СЃСѓС‰РµСЃС‚РІСѓРµС‚" << endl;
 
-	Point B = 5;     //параметризованный конструктор позволяет создавать то, каким будет наш объект при создании
-	B.print();       //singl-argument constrcor - конструктор с одним параметром
+	Point B = 5;     //РїР°СЂР°РјРµС‚СЂРёР·РѕРІР°РЅРЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕР·РІРѕР»СЏРµС‚ СЃРѕР·РґР°РІР°С‚СЊ С‚Рѕ, РєР°РєРёРј Р±СѓРґРµС‚ РЅР°С€ РѕР±СЉРµРєС‚ РїСЂРё СЃРѕР·РґР°РЅРёРё
+	B.print();       //singl-argument constrcor - РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РѕРґРЅРёРј РїР°СЂР°РјРµС‚СЂРѕРј
 
 	Point C(7, 8);   //
 	C.print();
@@ -218,7 +272,7 @@ void main()
 	Point A, B, C;
 	cout << delimiter << endl;
 	A = B = C = Point(2, 3);
-	//Point(2,3) - здесь мы явно вызываем конструкторб и создаем временный безымянный объект
+	//Point(2,3) - Р·РґРµСЃСЊ РјС‹ СЏРІРЅРѕ РІС‹Р·С‹РІР°РµРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР± Рё СЃРѕР·РґР°РµРј РІСЂРµРјРµРЅРЅС‹Р№ Р±РµР·С‹РјСЏРЅРЅС‹Р№ РѕР±СЉРµРєС‚
 	cout << delimiter << endl;
 	A.print();
 	B.print();
